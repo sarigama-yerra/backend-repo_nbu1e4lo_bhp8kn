@@ -41,8 +41,13 @@ class Product(BaseModel):
 # Add your own schemas here:
 # --------------------------------------------------
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class TwoFASecret(BaseModel):
+    """
+    2FA Secrets collection schema
+    Collection name: "twofasecret"
+    """
+    user_id: str = Field(..., description="User identifier this secret belongs to")
+    secret: str = Field(..., description="Base32 TOTP secret")
+    issuer: str = Field(..., description="Issuer shown in authenticator apps")
+    label: str = Field(..., description="Account label shown in authenticator apps")
+    enabled: bool = Field(default=False, description="Whether 2FA is enabled for the user")
